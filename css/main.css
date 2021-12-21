@@ -1,0 +1,36 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    margin: 70px;
+}
+
+.search-view{
+    width: 350px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-search{
+    padding: 0 10px;
+}
+
+.show-wrapper{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: absolute;
+    width: 100%;
+    padding: 20px 100px;
+    left: 0;
+    top: 90px;
+}
+
+.show-wrapper__hidden{
+    display: flex;
+    position: fixed;
+    opacity: 0.5;
+}
+
