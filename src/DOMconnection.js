@@ -13,11 +13,11 @@ export const mapDomElements = (values, attribute) => {
 
 export const createDomElem = (tagName, className, innerText, src) => {
     const tag = document.createElement(tagName)
-    console.log(tag)
+
     tag.classList = className
 
     if(innerText) tag.innerText = innerText
-    // if(src) tag.src = src
+    if(src) tag.src = src
 
     return tag
 }
