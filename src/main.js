@@ -25,28 +25,28 @@ class TvApp{
     setupListeners = () => {
         this.viewElem.showSearchView.addEventListener("keydown", this.handleSubmit)
         this.viewElem.searchButton.addEventListener("click", this.handleSubmit)
-
     }
 
+//Input submit function
     handleSubmit = (event) => {
         if(event.key === "Enter" || event.type === "click"){
             this. selectedName = this.viewElem.showSearch.value
-
             this.fetchAndDisplayShows()
         }
     }
 
+//Function of api server connection by key word filter
     fetchAndDisplayShows = () => {
         this.viewElem.showsWrapper.innerHTML = ""
         this.viewElem.showPreview.innerHTML = ""
         getShowByKey(this.selectedName)
         .then(shows => {
-
             this.renderCard(shows)
             this.viewElem.showsWrapper.classList.remove('show-wrapper__hidden')
         })
     }
 
+//Open card with details function
     openShowWithDetails = (event) => {
         const id = event.target.dataset.showId
 
@@ -54,24 +54,25 @@ class TvApp{
             console.log(show)
             const card = this.displayShowCard(show, true)
             this.viewElem.showPreview.appendChild(card)
-
             this.viewElem.showsWrapper.classList.add('show-wrapper__hidden')
         })
     }
 
+//Close card with details function
     closeShowWithDetails = () => {
         this.viewElem.showPreview.innerHTML = ""
         this.viewElem.showsWrapper.classList.remove('show-wrapper__hidden')
     }
 
+//Function of creating card for each show
     renderCard = (shows) => {
-
             for(const {show} of shows){
                 const card = this.displayShowCard(show)
                 this.viewElem.showsWrapper.appendChild(card)
             }
     }
 
+//Card elements display function
     displayShowCard = (show, isDetailed) => {
         const divCard = createDomElem('div', 'card', null, null)
         const divCardBody = createDomElem('div', 'card-body', null, null)
@@ -83,7 +84,7 @@ class TvApp{
 
         if(show.image){
             if(isDetailed){
-                img = createDomElem('img', 'card-img-top', null, show.image.original)    
+                img = createDomElem('img', 'card-img-top', null, show.image.original)
             }
             else{
                 img = createDomElem('img', 'card-img-top', null, show.image.medium)
@@ -98,8 +99,7 @@ class TvApp{
                 p = createDomElem('p', 'card-text', show.summary.match(regex).join(""), null)
             }
             else{
-                
-                p = createDomElem('p', 'card-text', `${show.summary.match(regex).join("").slice(0, 80)}...`, null)    
+                p = createDomElem('p', 'card-text', `${show.summary.match(regex).join("").slice(0, 80)}...`, null)
             }
         }
         else{
@@ -110,7 +110,7 @@ class TvApp{
 
         if(isDetailed){
             btn.addEventListener("click", this.closeShowWithDetails)
-            btn.innerText = "Close details"    
+            btn.innerText = "Close details"
         }
         else{
             btn.addEventListener("click", this.openShowWithDetails)
@@ -123,7 +123,6 @@ class TvApp{
         divCardBody.appendChild(btn)
 
         return divCard
-
     }
 
 }
