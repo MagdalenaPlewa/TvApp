@@ -37,12 +37,9 @@ class TvApp{
 
 //Function of api server connection by key word filter
     fetchAndDisplayShows = () => {
-        this.viewElem.showsWrapper.innerHTML = ""
-        this.viewElem.showPreview.innerHTML = ""
         getShowByKey(this.selectedName)
         .then(shows => {
             this.renderCard(shows)
-            this.viewElem.showsWrapper.classList.remove('show-wrapper__hidden')
         })
     }
 
@@ -51,7 +48,6 @@ class TvApp{
         const id = event.target.dataset.showId
 
         getShowById(id).then(show => {
-            console.log(show)
             const card = this.displayShowCard(show, true)
             this.viewElem.showPreview.appendChild(card)
             this.viewElem.showsWrapper.classList.add('show-wrapper__hidden')
@@ -59,17 +55,27 @@ class TvApp{
     }
 
 //Close card with details function
-    closeShowWithDetails = () => {
+    closeShowWithDetails = (event) => {
+        const id = event.target.dataset.showId
+        const closeBtn = document.querySelector(`[id="showPreview"] [data-show-id="${id}"]`)
+        closeBtn.removeEventListener("click", this.closeShowWithDetails)
         this.viewElem.showPreview.innerHTML = ""
         this.viewElem.showsWrapper.classList.remove('show-wrapper__hidden')
     }
 
 //Function of creating card for each show
     renderCard = (shows) => {
-            for(const {show} of shows){
-                const card = this.displayShowCard(show)
-                this.viewElem.showsWrapper.appendChild(card)
-            }
+        Array.from(document.querySelectorAll('[data-show-id]')).forEach(btn => btn.removeEventListener("click", this.openShowWithDetails)
+        )
+
+        this.viewElem.showsWrapper.innerHTML = ""
+        this.viewElem.showPreview.innerHTML = ""
+        this.viewElem.showsWrapper.classList.remove('show-wrapper__hidden')
+
+        for(const {show} of shows){
+            const card = this.displayShowCard(show)
+            this.viewElem.showsWrapper.appendChild(card)
+        }
     }
 
 //Card elements display function
